@@ -10,12 +10,12 @@ export default function Tickets() {
 
   const fetchTickets = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tickets`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tickets`, {
         headers: { Authorization: `Bearer ${token}` },
         method: "GET",
       });
       const data = await res.json();
-      setTickets(data.tickets || []);
+      setTickets(data || []);
     } catch (err) {
       console.error("Failed to fetch tickets:", err);
     }
@@ -33,7 +33,7 @@ export default function Tickets() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tickets`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tickets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function Tickets() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
+    <div className="p-4 max-w-3xl mx-auto mt-24">
       <h2 className="text-2xl font-bold mb-4">Create Ticket</h2>
 
       <form onSubmit={handleSubmit} className="space-y-3 mb-8">

@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
+// import App from "./App.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CheckAuth from "./components/check-auth.jsx";
 import Tickets from "./pages/tickets.jsx";
@@ -9,15 +9,26 @@ import TicketDetailsPage from "./pages/ticket.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
 import Admin from "./pages/admin.jsx";
+import Navbar from "./components/navbar.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    
     <BrowserRouter>
+    <Navbar/>
       <Routes>
+        {/* <Route
+          path="/"
+          element={
+            <CheckAuth protectedRoute={false}>
+              <Navbar />
+            </CheckAuth>
+          }
+        /> */}
         <Route
           path="/"
           element={
-            <CheckAuth protected={true}>
+            <CheckAuth protectedRoute={true}>
               <Tickets />
             </CheckAuth>
           }
@@ -25,31 +36,31 @@ createRoot(document.getElementById("root")).render(
         <Route
           path="/tickets/:id"
           element={
-            <CheckAuth protected={true}>
+            <CheckAuth protectedRoute={true}>
               <TicketDetailsPage />
             </CheckAuth>
           }
         />
         <Route
-          path="/login"
+          path="api/login"
           element={
-            <CheckAuth protected={false}>
+            <CheckAuth protectedRoute={false}>
               <Login />
             </CheckAuth>
           }
         />
         <Route
-          path="/signup"
+          path="api/signup"
           element={
-            <CheckAuth protected={false}>
+            <CheckAuth protectedRoute={false}>
               <Signup />
             </CheckAuth>
           }
         />
         <Route
-          path="/admin"
+          path="/api/admin"
           element={
-            <CheckAuth protected={true}>
+            <CheckAuth protectedRoute={true}>
               <Admin />
             </CheckAuth>
           }

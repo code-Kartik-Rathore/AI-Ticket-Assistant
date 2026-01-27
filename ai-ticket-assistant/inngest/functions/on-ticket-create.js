@@ -15,17 +15,24 @@ export const onTicketCreated = inngest.createFunction(
       //fetch ticket from DB
       const ticket = await step.run("fetch-ticket", async () => {
         const ticketObject = await Ticket.findById(ticketId);
-        if (!ticket) {
+        if (!ticketObject) {
           throw new NonRetriableError("Ticket not found");
         }
         return ticketObject;
       });
+      
 
       await step.run("update-ticket-status", async () => {
         await Ticket.findByIdAndUpdate(ticket._id, { status: "TODO" });
       });
 
+      // const aiResponse = await analyzeTicket(ticket);
       const aiResponse = await analyzeTicket(ticket);
+      if (!aiResponse) {
+        console.log("⚠️ AI did not return valid JSON. Falling back to defaults.");
+        return { success: false, reason: "Invalid AI response" };
+      }
+
 
       const relatedskills = await step.run("ai-processing", async () => {
         let skills = [];
@@ -64,7 +71,7 @@ export const onTicketCreated = inngest.createFunction(
         return user;
       });
 
-      await setp.run("send-email-notification", async () => {
+      await step.run("send-email-notification", async () => {
         if (moderator) {
           const finalTicket = await Ticket.findById(ticket._id);
           await sendMail(

@@ -15,7 +15,7 @@ export default function AdminPanel() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/users`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -43,7 +43,7 @@ export default function AdminPanel() {
   const handleUpdate = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/auth/update-user`,
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/update-user`,
         {
           method: "POST",
           headers: {
@@ -84,7 +84,7 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="max-w-4xl mx-auto mt-20">
       <h1 className="text-2xl font-bold mb-6">Admin Panel - Manage Users</h1>
       <input
         type="text"

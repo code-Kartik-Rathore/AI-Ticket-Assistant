@@ -11,10 +11,10 @@ export default function Navbar() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/api/login");
   };
   return (
-    <div className="navbar bg-base-200">
+    <div className="navbar bg-base-200 fixed top-0 left-0 w-full z-50">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">
           Ticket AI
@@ -23,10 +23,10 @@ export default function Navbar() {
       <div className="flex gap-2">
         {!token ? (
           <>
-            <Link to="/signup" className="btn btn-sm">
+            <Link to="/api/signup" className="btn btn-sm">
               Signup
             </Link>
-            <Link to="/login" className="btn btn-sm">
+            <Link to="/api/login" className="btn btn-sm">
               Login
             </Link>
           </>
@@ -34,7 +34,7 @@ export default function Navbar() {
           <>
             <p>Hi, {user?.email}</p>
             {user && user?.role === "admin" ? (
-              <Link to="/admin" className="btn btn-sm">
+              <Link to="/api/admin" className="btn btn-sm">
                 Admin
               </Link>
             ) : null}
